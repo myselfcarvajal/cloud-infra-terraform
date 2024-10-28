@@ -4,7 +4,7 @@ resource "aws_vpc" "main" {
   enable_dns_support   = true
 
   tags = {
-    Name = "terraform-vpc"
+    Name = "${var.prefix}-VPC"
   }
 }
 
@@ -15,7 +15,7 @@ resource "aws_subnet" "public_subnets" {
   availability_zone = element(var.azs, count.index)
 
   tags = {
-    Name = "Public Subnet ${count.index + 1}"
+    Name = "${var.prefix}-public${count.index + 1}"
   }
 }
 
@@ -26,7 +26,7 @@ resource "aws_subnet" "private_subnets" {
   availability_zone = element(var.azs, count.index)
 
   tags = {
-    Name = "Private Subnet ${count.index + 1}"
+    Name = "${var.prefix}-private${count.index + 1}"
   }
 }
 
@@ -34,7 +34,7 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "terraform VPC IG"
+    Name = "${var.prefix}-IGW"
   }
 }
 
@@ -47,15 +47,15 @@ resource "aws_route_table" "public_rt" {
   }
 
   tags = {
-    Name = "Public Route Table"
+    Name = "${var.prefix}-public-rt"
   }
 }
 
 resource "aws_route_table" "private_rt" {
   vpc_id = aws_vpc.main.id
-  
+
   tags = {
-    Name = "Private Route Table"
+    Name = "${var.prefix}-private-rt"
   }
 }
 

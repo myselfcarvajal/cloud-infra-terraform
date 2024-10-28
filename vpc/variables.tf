@@ -1,3 +1,15 @@
+variable "prefix" {
+  description = "Prefix resources"
+  default     = "terraform"
+  type        = string
+}
+
+variable "vpc_cidr" {
+  description = "Bloque CIDR para la VPC"
+  default     = "10.11.0.0/16"
+  type        = string
+}
+
 variable "public_subnet_cidrs" {
   type        = list(string)
   description = "Public Subnet CIDR values"
