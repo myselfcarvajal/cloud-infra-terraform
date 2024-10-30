@@ -1,6 +1,6 @@
 variable "prefix" {
   description = "Prefix resources"
-  default     = "terraform"
+  default     = "dev"
   type        = string
 }
 
