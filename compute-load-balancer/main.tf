@@ -56,7 +56,7 @@ module "instance_1" {
               sudo yum install git -y
 
               #Run nginx
-              docker run --name red-nginx -p 80:80 -d myselfcarvajal/blue-nginx:1.0
+              docker run --name red-nginx -p 80:80 -d myselfcarvajal/red-nginx:1.0
               EOF
 
   server_name = {
