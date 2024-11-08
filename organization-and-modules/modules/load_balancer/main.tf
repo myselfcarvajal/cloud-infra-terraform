@@ -6,13 +6,13 @@ resource "aws_lb_target_group" "tg" {
   target_type = var.target_type
 
   health_check {
-    path                = "/"
-    protocol            = "HTTP"
-    matcher             = "200"
-    interval            = 15
-    timeout             = 3
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
+    path                = var.health_check_path
+    protocol            = var.health_check_protocol
+    matcher             = var.health_check_matcher
+    interval            = var.health_check_interval
+    timeout             = var.health_check_timeout
+    healthy_threshold   = var.healthy_threshold
+    unhealthy_threshold = var.unhealthy_threshold
   }
 }
 
@@ -43,8 +43,8 @@ resource "aws_lb_listener" "http" {
         arn = aws_lb_target_group.tg.arn
       }
       stickiness {
-        enabled  = true
-        duration = 28800
+        enabled  = var.stickiness_enabled
+        duration = var.stickiness_duration
       }
     }
   }
