@@ -92,3 +92,22 @@ module "instance_2" {
     Name = "blue-nginx"
   }
 }
+
+module "load_balancer" {
+  source = "../organization-and-modules/modules/load_balancer"
+
+  # Valores que necesitas especificar
+  vpc_id              = module.vpc.vpc_id
+  subnet_ids          = module.vpc.public_subnets_ids
+  security_group_id   = module.web_server_sg.security_group_id
+  target_instance_ids = [module.instance_1.instance_id, module.instance_2.instance_id]
+
+  # Opciones del balanceador de carga y grupo de destino
+  lb_name               = var.lb_name
+  target_group_name     = var.target_group_name
+  listener_port         = var.listener_port
+  listener_protocol     = var.listener_protocol
+  target_group_port     = var.target_group_port
+  target_group_protocol = var.target_group_protocol
+  target_type           = var.target_type
+}

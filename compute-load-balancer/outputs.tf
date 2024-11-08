@@ -54,3 +54,12 @@ output "instance_2_public_ip" {
   description = "Dirección IP pública de la instancia EC2 para instance_2"
   value       = module.instance_2.public_ip
 }
+
+# load_balancer
+output "tg_id" {
+  value = module.load_balancer.tg.id
+}
+
+output "elb_id" {
+  value = module.load_balancer.elb.id
+}
