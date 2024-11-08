@@ -1,0 +1,54 @@
+prefix               = "lb"
+vpc_cidr             = "10.11.0.0/16"
+public_subnet_cidrs  = ["10.11.1.0/24", "10.11.2.0/24"]
+private_subnet_cidrs = ["10.11.3.0/24", "10.11.4.0/24"]
+azs                  = ["us-east-1a", "us-east-1b"]
+
+# Variables para el módulo web_server_sg
+description = "Security group for web servers"
+
+ingress_rules = [
+  {
+    description = "HTTP access from anywhere"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  },
+  {
+    description = "SSH access from anywhere"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+]
+
+egress_rules = [
+  {
+    description = "Allow all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+]
+
+tags = {
+  Name        = "web-server-sg"
+  Environment = "lb"
+}
+
+# Variables para el módulo compute
+
+ami_id        = "ami-0ddc798b3f1a5117e"
+instance_type = "t2.micro"
+
+# Variables para el módulo load balancer
+lb_name               = "elb-nginx"
+target_group_name     = "nginx-tg"
+listener_port         = 80
+listener_protocol     = "HTTP"
+target_group_port     = 80
+target_group_protocol = "HTTP"
+target_type           = "instance"
